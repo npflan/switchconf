@@ -27,9 +27,14 @@ class Batch:
         self.telnet_host = '192.168.0.250'
         self.telnet_base_port = 2000
 
-        self.snmp_community = ''
-        self.enable_password = ''
-        self.access_password = ''
+        import configparser
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+
+        self.snmp_community = config['2950t']['snmp_community']
+        self.old_enable_password = config['2950t']['old_enable_password']
+        self.enable_password = config['2950t']['enable_password']
+        self.access_password = config['2950t']['access_password']
 
     def configure(self):
 
@@ -40,7 +45,7 @@ class Batch:
                     cisco2950t.flash(
                         telnet_host=telnet_host,
                         telnet_port=telnet_port,
-                        password=enable_password)
+                        password=self.old_enable_password)
                     with self.lock:
                         self.batch_status[index] = \
                             f'{index + 1: >2}: {self.config[index][0]} - Preflight succeeded'
@@ -97,7 +102,8 @@ class Batch:
 
 if __name__ == '__main__':
     import sys
+    # start index in switches.csv, 0, 16, 32 etc if size is 16
     start_index = int(sys.argv[1]) * 16
-
-    b = Batch(start_index, 11)
+    # Set size of batch
+    b = Batch(start_index, 16)  #
     b.configure()
