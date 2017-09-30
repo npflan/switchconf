@@ -105,5 +105,5 @@ if __name__ == '__main__':
     # start index in switches.csv, 0, 16, 32 etc if size is 16
     start_index = int(sys.argv[1]) * 16
     # Set size of batch
-    b = Batch(start_index, 16)  #
+    b = Batch(start_index, 16)
     b.configure()
