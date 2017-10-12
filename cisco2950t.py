@@ -112,7 +112,7 @@ def configure(
     tn.await_send("config", "clock summer-time CET recurring last Sun Mar 2:00 last Sun Oct 3:00\r")  # noqa
     tn.await_send("config", "aaa new-model\r")
     tn.await_send("config", f"enable secret {enable_password}\r")
-    tn.await_send("config", f"username admin privilege 15 secret {access_password} \r")  # noqa
+    tn.await_send("config", f"username admin privilege 15 secret {access_password}\r")  # noqa
     tn.await_send("config", "no ip domain-lookup\r")
     tn.await_send("config", "ip domain-name access.npf\r")
     tn.await_send("config", "crypto key generate rsa mod 1024\r")
