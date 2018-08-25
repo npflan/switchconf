@@ -129,6 +129,7 @@ def configure(
     tn.await_send("config", "errdisable recovery cause all\r")
     tn.await_send("config", "no errdisable recovery cause psecure-violation\r")
     tn.await_send("config", "no ip http server\r")
+    tn.await_send("config", "no cdp advertise-v2\r")
 
     tn.await_send("config", "vlan 10\r")
     tn.await_send("config-vlan", "name ACCESS\r")
