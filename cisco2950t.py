@@ -161,37 +161,12 @@ def configure(
     tn.await_send("config-if", f"ip default-gateway {gw}\r")
 
     tn.await_send("config", "ip access-list standard PERMIT_MANAGEMENT_ONLY\r")
-    tn.await_send("config-std-nacl", "permit 10.0.11.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.1.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.10.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.11.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.12.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.13.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.14.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.15.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.16.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.2.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.251.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.252.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.253.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.254.11.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.254.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.255.255.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.3.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.4.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.5.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.6.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.7.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.8.252.0 0.0.0.255\r")
-    tn.await_send("config-std-nacl", "permit 10.9.252.0 0.0.0.255\r")
-
     tn.await_send("config-std-nacl", "permit 10.97.0.15 0.0.0.0\r")
-    tn.await_send("config-std-nacl", "permit 10.250.252.0 0.0.0.255\r")
     tn.await_send("config-std-nacl", "permit 10.97.0.20 0.0.0.0\r")
-    tn.await_send("config-std-nacl", "permit 10.248.0.0 0.0.191.255\r")
+    tn.await_send("config-std-nacl", "permit 10.248.248.0 0.0.3.255\r")
+    tn.await_send("config-std-nacl", "permit 10.254.11.0 0.0.0.255\r")
 
-    tn.await_send("config-std-nacl",
-                  f"snmp-server community {snmp_community} RO 1\r")
+    tn.await_send("config-std-nacl", f"snmp-server community {snmp_community} RO 1\r")
     tn.await_send("config", f"snmp-server host 10.0.1.13 traps version 2c {snmp_community}\r")  # noqa
     tn.await_send("config", f"snmp-server host 10.0.1.140 traps version 2c {snmp_community}\r")  # noqa
     tn.await_send("config", f"snmp-server host 10.97.0.20 version 2c {snmp_community}\r")  # noqa
