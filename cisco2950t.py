@@ -6,7 +6,7 @@ class Telnet(telnetlib.Telnet):
 
     verbose = False
 
-    def await(self, expected, timeout=None):
+    def wait(self, expected, timeout=None):
         data = self.read_until(
             expected.encode('ascii'), timeout=timeout)
 
@@ -15,14 +15,14 @@ class Telnet(telnetlib.Telnet):
         if self.verbose:
             sys.stdout.write(data)
         return data
-
+    
     def send(self, data):
         if self.verbose:
             sys.stdout.write(data)
         self.write(data.encode('ascii'))
 
     def await_send(self, expected, answer, timeout=None, fallback='\r'):
-        res = self.await(expected, timeout=timeout)
+        res = self.wait(expected, timeout=timeout)
         if expected in res:
             self.send(answer)
             return True
@@ -146,16 +146,20 @@ def configure(
     tn.await_send("config-if-range", "switchport port-security\r")
     tn.await_send("config-if-range", "no shutdown\r")
 
-    tn.await_send("config-if-range", "int ra gi0/1 -2\r")
-    tn.await_send("config-if-range", "ip dhcp snooping trust\r")
-    tn.await_send("config-if-range", "switchport mode trunk\r")
-    tn.await_send("config-if-range", "switchport trunk native vlan 10\r")
-    tn.await_send("config-if-range", "switchport trunk allowed vlan 10,193\r")
-    tn.await_send("config-if-range", "switchport nonegotiate\r")
-    tn.await_send("config-if-range", "cdp enable\r")
-    tn.await_send("config-if-range", "no shutdown\r")
+    tn.await_send("config-if-range", "int gi0/1\r")
+    tn.await_send("config-if", "ip dhcp snooping trust\r")
+    tn.await_send("config-if", "switchport mode trunk\r")
+    tn.await_send("config-if", "switchport trunk native vlan 10\r")
+    tn.await_send("config-if", "switchport trunk allowed vlan 10,193\r")
+    tn.await_send("config-if", "switchport nonegotiate\r")
+    tn.await_send("config-if", "cdp enable\r")
+    tn.await_send("config-if", "no shutdown\r")
+    
+    tn.await_send("config-if", "int gi0/2\r")
+    tn.await_send("config-if", "shutdown\r")
 
-    tn.await_send("config-if-range", "int vl 193\r")
+
+    tn.await_send("config-if", "int vl 193\r")
     tn.await_send("config-if", f"ip add {mgmt} 255.255.255.0\r")
     tn.await_send("config-if", "no shutdown\r")
     tn.await_send("config-if", f"ip default-gateway {gw}\r")
@@ -208,3 +212,4 @@ def configure(
 
 if __name__ == '__main__':
     flash('192.168.0.250', 2001, password='')
+    
